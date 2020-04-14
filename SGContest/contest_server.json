@@ -1,0 +1,13 @@
+{
+    "service": "ContestServer",
+    "workers": 2,
+    "processors_root": "/app/processors/",
+    "processors": {
+        "equal_processor": {
+            "type": "equal_processor",
+            "mongo_host": "mongo",
+            "mongo_port": 27017,
+            "mongo_db": "transactions-db"
+        }
+    }
+}

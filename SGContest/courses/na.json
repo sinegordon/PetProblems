@@ -1,0 +1,13 @@
+{
+    "1": {
+        "desc": "Echo",
+        "type": "equal",
+        "variants":
+        {
+            "1": {
+                "test1": {"in": "123", "out": "123", "score": 50},
+                "test2": {"in": "345", "out": "345", "score": 50}
+            }
+        }
+    }
+}
