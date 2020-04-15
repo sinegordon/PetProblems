@@ -1,0 +1,14 @@
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/bin/Debug/netcoreapp3.1/ConsoleContester.deps.json
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/bin/Debug/netcoreapp3.1/ConsoleContester.runtimeconfig.json
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/bin/Debug/netcoreapp3.1/ConsoleContester.runtimeconfig.dev.json
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/bin/Debug/netcoreapp3.1/ConsoleContester.dll
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/bin/Debug/netcoreapp3.1/ConsoleContester.pdb
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/obj/Debug/netcoreapp3.1/ConsoleContester.csprojAssemblyReference.cache
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/obj/Debug/netcoreapp3.1/ConsoleContester.csproj.CoreCompileInputs.cache
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/obj/Debug/netcoreapp3.1/ConsoleContester.AssemblyInfoInputs.cache
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/obj/Debug/netcoreapp3.1/ConsoleContester.AssemblyInfo.cs
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/obj/Debug/netcoreapp3.1/ConsoleContester.csproj.CopyComplete
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/obj/Debug/netcoreapp3.1/ConsoleContester.dll
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/obj/Debug/netcoreapp3.1/ConsoleContester.pdb
+/Users/user/Programming/PetProblems/SGContest/ConsoleContester/ConsoleContester/obj/Debug/netcoreapp3.1/ConsoleContester.genruntimeconfig.cache
