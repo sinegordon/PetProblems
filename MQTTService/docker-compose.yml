@@ -1,0 +1,28 @@
+version: '3'
+services:
+  http:
+    restart: always
+    build: Http
+    ports:
+      - "0.0.0.0:8000:8000"
+    volumes:
+      - ./logs:/app/logs
+      - ./http_config.json:/app/http_config.json
+  mongo:
+    restart: always
+    image: mongo
+    ports:
+      - "27017:27017"
+  mosquitto:
+    image: eclipse-mosquitto
+    expose:
+      - "1883"
+      - "9001"
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+  iot-data:
+    build: IoT
+    volumes:
+      - ./logs:/app/logs
+      - ./iot_config.json:/app/iot_config.json

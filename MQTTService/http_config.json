@@ -1,0 +1,7 @@
+{
+    "service_name": "HttpService",
+    "host": "mongo",
+    "port": 27017,
+    "db": "test",
+    "collection": "iot"
+}
