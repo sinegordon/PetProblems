@@ -20,7 +20,7 @@ class Test():
     '''Test API method'''
     def on_get(self, req, resp):
         try:
-            data = worker.test({ 'timestamp': req.params['timestamp'] })
+            data = worker.test({ 'timestamp': int(req.params['timestamp']) })
             resp.media = json.dumps(data, cls=MongoEngineEncoder)
             resp.status = falcon.HTTP_200
             resp.content_type = falcon.MEDIA_JSON

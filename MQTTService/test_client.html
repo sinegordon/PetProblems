@@ -1,0 +1,22 @@
+<html>
+    <body>
+        <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+        <script>
+            $.ajax({
+                url: '/api/test',
+                type: 'POST',
+                data: JSON.stringify(polygon.toGeoJSON()),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                async: true,
+                success: function(msg) {
+                    var json = $.parseJSON(msg)
+                    alert("Периметр многоугольника - " + json['result']);
+                },
+                error: function( jqXhr, textStatus, errorThrown ){
+                    alert("Error - " + errorThrown);
+                }
+            });
+    </script>
+    </body>
+</html>
