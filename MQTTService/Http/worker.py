@@ -12,10 +12,9 @@ class Worker:
         self.db = self.client[config['db']]
         self.collection = self.db[config['collection']]
 
-    def test(self, msg):
+    def test(self, data):
         ret = {'data': []}
         try:
-            data = json.loads(msg)
             print(f"Data - {data}")
             ts = data['timestamp']
             ret['data'] = list(self.collection.find( { "timestamp": { "$gt": ts } } ))
