@@ -1,9 +1,9 @@
 {
     "service_name": "IoTService",
-    "host": "mongo",
-    "port": 27017,
-    "db": "test",
-    "collection": "iot",
-    "mqtt_topic": "test",
-    "mqtt_host": "mosquitto"
+    "mongo_host": "mongo",
+    "mongo_port": 27017,
+    "mongo_db": "test",
+    "mongo_collection": "iot",
+    "mqtt_host": "mosquitto",
+    "mqtt_topic": "test"
 }
