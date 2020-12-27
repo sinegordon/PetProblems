@@ -8,8 +8,6 @@ services:
     volumes:
       - ./logs:/app/logs
       - ./contest_server.json:/app/config.json
-      - ./languages.json:/app/languages.json
-      - ./courses/na.json:/app/na.json
   mongo:
     restart: always
     image: mongo

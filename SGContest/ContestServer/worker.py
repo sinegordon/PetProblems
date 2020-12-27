@@ -7,6 +7,8 @@ from pathlib import Path
 from multiprocessing import Process, Queue, current_process, Manager
 from typing import Dict, Any, Type, Optional
 
+from pymongo import message
+
 from dispatcher import Dispatcher
 from processors import BaseProcessor
 
@@ -94,38 +96,22 @@ class Worker(Dispatcher):
             except Exception as err:
                 print(str(err))
 
-    def process_transaction(self, transaction: Dict[str, Any]) -> None:
+    def process_message(self, message: Dict[str, Any]) -> None:
         timeout = 60
         pid = current_process().pid
-        str_out = f'PID = {pid}. Got transaction - {transaction}'
+        str_out = f'PID = {pid}. Got message - {message}'
         print(str_out)
-        transaction['timestamp'] = int(time.time())
+        message['timestamp'] = int(time.time())
         for name, p in self.processors.items():
             try:
-                res = p.process(transaction, self.config)
+                res = p.process(message, self.config)
                 if not res is None:
                     self.results[res['message']['id']] = res
             except Exception as err:
                 print(p.name, err)
 
-
-    def get_processors_list(self) -> None:
-        pass
-
     def add_processor(self, name: str, cfg: Config) -> None:
-        # str_out = 'PID = {pid}. Get from self.service_queue - {cmd_str}'.format(pid=pid, cmd_str=cmd_str)
-        # print(str_out)
         cfg.setdefault('service', self.config.get('service'))
         p = self._load_processor(name, cfg)
         if p is not None:
             self.processors[name] = p
-        # str_out = 'PID = {pid}. Module {f} was added.'.format(pid=pid, f=cmd_mas['name'])
-        # print(str_out)
-
-    def del_processor(self, name: str) -> None:
-        # str_out = 'PID = {pid}. Get from self.service_queue - {cmd_str}'.format(pid=pid, cmd_str=cmd_str)
-        # print(str_out)
-        if name in self.processors:
-            self.processors.pop(name)
-        # str_out = 'PID = {pid}. Module {f} was removed.'.format(pid=pid, f=cmd_mas['name'])
-        # print(str_out)

@@ -22,7 +22,7 @@ class ClientApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         code = self.text_code.toPlainText()
         message = {'id': id, 'mqtt_key': mqtt_key, 'user': user, 'language': language, 'course': course, 
             'problem': problem, 'variant': variant, 'code': code}
-        resp = requests.post('https://cloud.mst-dev.ru/contest/api/add_transaction', json=message)
+        resp = requests.post('http://localhost:8000/api/add_message', json=message)
         if not resp.ok:
             self.text_code.setPlainText("Не удалось отправить задачу")
             return
@@ -34,7 +34,7 @@ class ClientApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             count += 1
             self.statusbar.showMessage(f"Попытка проверки №{count}.")
             message = {'id': id}
-            resp = requests.post('https://cloud.mst-dev.ru/contest/api/get_transaction_result', json=message)
+            resp = requests.post('http://localhost:8000/api/get_message_result', json=message)
             if 'error' not in resp.json():
                 self.text_code.setPlainText(f"Задача проверена.\nРезультат:\n{resp.json()}")
                 self.statusbar.showMessage("")

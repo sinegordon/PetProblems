@@ -13,7 +13,9 @@ class Processor(BaseProcessor):
     def __init__(self, name, config):
         super().__init__(name, config)
         client = MongoClient(config['mongo_host'], config['mongo_port'])
-        self.db = client[config['mongo_db']]
+        self.db_courses = client[config['mongo_db_courses']]
+        self.db_messages = client[config['mongo_db_messages']]
+        self.languages_config = config["languages"]
 
     def process(self, message, config=None):
 
@@ -26,20 +28,25 @@ class Processor(BaseProcessor):
             need_keys = ('id', 'mqtt_key', 'user', 'language', 'course', 'problem', 'variant', 'code')
             if not all(k in message for k in need_keys):
                 return None
-            # Определяем настройки тестов
-            with open(f'./languages.json', 'r') as read_file:
-                languages_config = json.load(read_file)
-            with open(f'./{message["course"]}.json', 'r') as read_file:
-                course_config = json.load(read_file)
             pr = message['problem']
             var = message['variant']
             code = message['code']
-            fname = f'{message["user"]}'
+            fname = message["user"]
+            # Определяем настройки тестов
+            try:
+                collection = self.db_courses[message["course"]]
+                problem_config = list(collection.find({'problem': pr, 'type': 'equal'}))                
+                # Если не нашлось ничего - выходим
+                print(problem_config)
+                if len(problem_config) == 0:
+                    return None
+                tests = problem_config[0]['variants'][var]
+            except Exception as e:
+                self.log(f'Process error: {str(e)}')
+                return None
             with open(fname, 'w') as write_file:
-                write_file.write(message['code'])
+                write_file.write(code)
             # Проверка тестов
-            problem_type = course_config[pr]['type']
-            tests = course_config[pr]['variants'][var]
             results = {}
             success_count = 0
             res_score = 0
@@ -49,7 +56,7 @@ class Processor(BaseProcessor):
                 test_in = test['in']
                 test_out = test['out']
                 test_score = test['score']
-                p = Popen([languages_config[message['language']], fname], stdout=PIPE, stdin=PIPE, stderr=STDOUT)    
+                p = Popen([self.languages_config[message['language']], fname], stdout=PIPE, stdin=PIPE, stderr=STDOUT)    
                 try:
                     outs, errs = p.communicate(input=str.encode(test_in), timeout=30)
                     outs = outs.decode("utf-8").rstrip()
@@ -71,8 +78,8 @@ class Processor(BaseProcessor):
                 results[test_key] = result
                 
             collection_date = datetime.today().strftime('%Y-%m-%d')
-            # Select tnx collection
-            collection = self.db[f'all-({collection_date})']
+            # Select problem collection
+            collection = self.db_messages[f'{collection_date}']
             results['success_count'] = success_count
             results['res_score'] = res_score
             json_data = {'message': message, 'result': results}
@@ -82,6 +89,5 @@ class Processor(BaseProcessor):
             del json_data['_id']
             return json_data
         except Exception as err:
-            str_log = self.log_fmt(f'Process error: {str(err)}')
             self.log(f'Process error: {str(err)}')
             return None
