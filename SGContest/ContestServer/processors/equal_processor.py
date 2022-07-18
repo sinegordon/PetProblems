@@ -17,8 +17,7 @@ class Processor(BaseProcessor):
         self.db_messages = client[config['mongo_db_messages']]
         self.languages_config = config["languages"]
 
-    def process(self, message, config=None):
-
+    def process(self, message, config=None):        
         if isinstance(config, dict):
             config = {**self.config, **config}
         else:
@@ -28,19 +27,20 @@ class Processor(BaseProcessor):
             need_keys = ('id', 'mqtt_key', 'user', 'language', 'course', 'problem', 'variant', 'code')
             if not all(k in message for k in need_keys):
                 return None
-            pr = message['problem']
+            pr = int(message['problem'])
             var = message['variant']
             code = message['code']
-            fname = message["user"]
+            fname = message['user']
             # Определяем настройки тестов
             try:
                 collection = self.db_courses[message["course"]]
-                problem_config = list(collection.find({'problem': pr, 'type': 'equal'}))                
+                problem_config = list(collection.find({'problem': pr, 'type': 'equal'}))
                 # Если не нашлось ничего - выходим
-                print(problem_config)
+                print(f"Problem - {problem_config}")                
                 if len(problem_config) == 0:
                     return None
                 tests = problem_config[0]['variants'][var]
+                print(f"Tests - {tests}")
             except Exception as e:
                 self.log(f'Process error: {str(e)}')
                 return None
